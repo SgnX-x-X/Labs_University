@@ -33,6 +33,11 @@ internal class Program
                     Console.Clear();
                     run = Quit();
                     break;
+                case 5:
+                    Console.CursorVisible = false;
+                    Game game = new Game();
+                    game.Start();
+                    break;
             }
         }
     }

@@ -4,7 +4,4 @@ class Game
     const int gameBoardHeight = 20;
     static int[,] gameBoard = new int[gameBoardHeight, gameBoardWidth];
     
-
-
-
 }
