@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\Programming\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\Programming\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\Programming\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectPath": "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\Programming\\ConsoleApp1\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\Nov22\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\ConsoleApp1\\ConsoleApp1\\obj\\",
+        "outputPath": "C:\\Users\\Nov22\\OneDrive\\Рабочий стол\\Labs\\Programming\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nov22\\AppData\\Roaming\\NuGet\\NuGet.Config"
