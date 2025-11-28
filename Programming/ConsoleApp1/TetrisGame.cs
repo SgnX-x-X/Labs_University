@@ -1,13 +1,11 @@
-public interface ITetris
+using System.Reflection.Metadata;
+/// <summary>
+/// Класс игры Тетрис
+/// </summary>
+public class Tetris
 {
-    void Game();
-}
-
-public class Tetris : ITetris
-{
-    // Настройки Поля
-    static int boardWidth = 10;
-    static int boardHeight = 20;
+    const int boardWidth = 10;
+    const int boardHeight = 20;
     static int[,] board = new int[boardWidth, boardHeight];
     static readonly Point[][] tetrominoes = new Point[][]
     {
@@ -19,34 +17,32 @@ public class Tetris : ITetris
         new Point[] { new Point(0, 0), new Point(-1, 0), new Point(1, 0), new Point(1, -1) },
         new Point[] { new Point(0, 0), new Point(-1, 0), new Point(1, 0), new Point(-1, -1) }
     };
-    // Текущая фигура
     static Point[] currentPiece;
     static Point currentPosition;
     static Random random = new Random();
-
     static bool gameOver = false;
     static int score = 0;
-
-    //Основной Игровой Цикл
+    /// <summary>
+    /// инициация игры
+    /// </summary>
     public void Game()
     {
+        gameOver=false;
+        score = 0;
+        for(int i=0;i<boardWidth;i++)for(int j=0;j<boardHeight;j++)board[i,j]=0; //отчистка игрового поля перед началом игры
         Console.CursorVisible = false;
         SpawnPiece();
         DrawBoard();
-
         int frame = 0;
         int gameSpeed = 40;
-
         while (!gameOver)
         {
             frame++;
-            // Обработка ввода 
             if (Console.KeyAvailable)
             {
                 var key = Console.ReadKey(true).Key;
                 HandleInput(key);
             }
-            // Падение фигуры
             if (frame % gameSpeed == 0)
             {
                 if (CanMove(currentPiece, currentPosition, 0, 1))
@@ -64,15 +60,12 @@ public class Tetris : ITetris
                     }
                 }
             }
-
-            // Отрисовка
             DrawBoard();
             DrawPiece();
             Thread.Sleep(10);
         }
-
-        // Конец Игры
         Console.Clear();
+        Console.CursorVisible = true;
         Console.WriteLine("GAME OVER");
         Console.WriteLine($"Ваш счёт: {score}");
         Console.ReadKey();
@@ -81,8 +74,9 @@ public class Tetris : ITetris
     static void SpawnPiece()
     {
         currentPiece = tetrominoes[random.Next(tetrominoes.Length)];
-        currentPosition = new Point(boardWidth / 2, 1); 
-    }    static bool CanMove(Point[] piece, Point pos, int dx, int dy)
+        currentPosition = new Point(boardWidth / 2, 1);
+    }    
+    static bool CanMove(Point[] piece, Point pos, int dx, int dy)
     {
         foreach (Point p in piece)
         {
@@ -111,7 +105,6 @@ public class Tetris : ITetris
             }
         }
     }
-
     static void ClearLines()
     {
         int linesCleared = 0;
@@ -126,7 +119,6 @@ public class Tetris : ITetris
                     break;
                 }
             }
-
             if (isLineFull)
             {
                 linesCleared++;
@@ -166,8 +158,6 @@ public class Tetris : ITetris
     {
         Console.SetCursorPosition(0, 0);
         Console.ForegroundColor = ConsoleColor.White;
-
-        // Верхняя граница
         Console.WriteLine("╔" + new string('═', boardWidth * 2) + "╗");
         for (int y = 0; y < boardHeight; y++)
         {
@@ -191,10 +181,9 @@ public class Tetris : ITetris
         Console.SetCursorPosition(boardWidth * 2 + 5, 2);
         Console.Write($"Счёт: {score}");
     }
-
     static void DrawPiece()
     {
-        Console.ForegroundColor = ConsoleColor.Cyan; // Цвет текущей фигуры
+        Console.ForegroundColor = ConsoleColor.Blue;
         foreach (Point p in currentPiece)
         {
             int x = currentPosition.X + p.X;
@@ -207,7 +196,6 @@ public class Tetris : ITetris
         }
         Console.ResetColor();
     }
-
     static void HandleInput(ConsoleKey key)
     {
         switch (key)
@@ -232,14 +220,16 @@ public class Tetris : ITetris
         }
     }
 }
+/// <summary>
+/// Структура для храния координат фигуры 
+/// </summary>
 public struct Point
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+    public Point(int x, int y)
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public Point(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
+        X = x;
+        Y = y;
     }
+}
