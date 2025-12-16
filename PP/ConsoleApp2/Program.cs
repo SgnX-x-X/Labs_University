@@ -2,101 +2,78 @@
 using Microsoft.Win32.SafeHandles;
 class Program
 {
+    public static readonly Dictionary<string,double> vehicles = new Dictionary<string, double> { { "Машина", 1.0 }, { "Грузовик", 1.2 }, {"Мотоцикл", 0.85} };
+    public static readonly Dictionary<string,double> seasons = new Dictionary<string, double>{ { "Лето", 1 }, { "Зима", 1.2 } };
     static void Main()
     {
-        History history = new History();
+        TripCalcilator histori = new TripCalcilator();
         bool isRunning = false;
         while (!isRunning)
         {
-            switch (Menu.MenuSelection(["Калькулятор Стоимости поездки", "Вывод истории поездки", "Анализ поездок", "выход"],"========= МЕНЮ ========="))
+            try
             {
-                case 0:
-                    double typeCoef = 0;
-                    double seasonCoef = 0;
-                    string strType = "";
-                    string strSeason = "";
-                    double[] coef = new double[5] {1 , 1.2, 0.85, 1, 1.1};
-                    double distance = Input("Введите расстояние (в км): ");
-                    double fuelConsumption = Input("Введите средний расход топлива на 100 км (в литрах): ");
-                    double fuelCostLiter = Input("Введите  цену топлива за литр (в рублях): ");
-                    int vehicle = Menu.MenuSelection(["Легковой", "Грузовик", "Мотоцикл"], "Выберите транспорт: ");
-                    switch (vehicle)
+                switch (Menu.MenuSelection(["Калькулятор Стоимости поездки", "Вывод истории поездки", "Анализ поездок", "выход"],"============== МЕНЮ =============="))
                     {
-                        case 0:
-                            typeCoef = coef[0];
-                            strType = "Легковой";
-                            break;
-                        case 1:
-                            typeCoef = coef[1];
-                            strType = "Грузовик";
-                            break;
-                        case 2:
-                            typeCoef = coef[2];
-                            strType = "Мотоцикл";
-                            break;
+                    case 0:
+                        string strType = "";
+                        string strSeason = "";
+                        double distance = Inputs.InputDouble("Введите расстояние (в км): ");
+                        double fuelConsumption = Inputs.InputDouble("Введите средний расход топлива на 100 км (в литрах): ");
+                        double fuelCostLiter = Inputs.InputDouble("Введите  цену топлива за литр (в рублях): ");
+                        switch (Menu.MenuSelection(["Машина", "Грузовик", "Мотоцикл"], "Выберите транспорт: "))
+                        {
+                            case 0:
+                                strType = "Машина";
+                                break;
+                            case 1:
+                                strType = "Грузовик";
+                                    break;
+                            case 2:
+                                strType = "Мотоцикл";
+                                break;
+                        }
+                        switch (Menu.MenuSelection(["Лето", "Зима"], "Выберите сезон: "))
+                        {
+                            case 0:
+                                strSeason = "Лето";
+                                break;
+                            case 1:
+                                strSeason = "Зима";
+                                break;
+                        }
+                        TripData trip = new TripData(distance, fuelConsumption, fuelCostLiter, strType, strSeason);
+                        trip.PrintInfo();
+                        histori.AddTrip(trip);
+                        break;
+                    case 1:
+                        histori.ShowTripHistory();
+                        break;
+                    case 2:
+                        histori.AnalyzeTrips();
+                        break;
+                    case 3:
+                        isRunning = Menu.MenuSelection(["да", "нет"], "Выйти?") == 0;
+                        break;
                     }
-                    int season = Menu.MenuSelection(["Лето", "Зима"], "Выберите сезон: ");
-                    switch (season)
-                    {
-                        case 0:
-                            seasonCoef = coef[3];
-                            strSeason = "Лето";
-                            break;
-                        case 1:
-                            seasonCoef = coef[4];
-                            strSeason = "Зима";
-                            break;
-                    }
-                    double costNoSeason = CalculateFuelConsumption(distance, fuelConsumption, fuelCostLiter, typeCoef);
-                    double totalCost = ApplySeasonalCoefficient(costNoSeason, seasonCoef);
-                    history.SaveTripToHistory(distance, strType, strSeason, totalCost);
-                    Console.WriteLine("=== Результаты расчета ===");
-                    Console.WriteLine($"Стоимость топлива: {costNoSeason:F2}");
-                    Console.WriteLine($"Сезонный коэффициент: {(seasonCoef - 1) * 100:F0}%");
-                    Console.WriteLine($"Итоговая стоимость поездки: {totalCost:F2}");
+            }
+            catch(InvalidOperationException ex)
+            {
+               Console.WriteLine(ex);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Вызвано исключение" + ex);
+            }
+            
+            finally
+            {
+                if(!isRunning)
+                {
                     Console.WriteLine("Чтобы вернуться в главное меню нажмите на любую кнопку");
                     Console.ReadKey();
-                    break;
-                case 1:
-                    history.ShowTripHistory();
-                    Console.WriteLine("Чтобы вернуться в главное меню нажмите на любую кнопку");
-                    Console.ReadKey();
-                    break;
-                case 2:
-                    history.AnalyzeTrips();
-                    Console.WriteLine("Чтобы вернуться в главное меню нажмите на любую кнопку");
-                    Console.ReadKey();
-                    break;
-                case 3:
-                    isRunning = Menu.MenuSelection(["да", "нет"], "Выйти?") == 0;
-                    break;
                 }
-        }
-    }
-    static double Input(string text)
-    {
-        double result = 0;
-        while (result <= 0)
-        {
-            Console.Write(text);
-            while (!Double.TryParse(Console.ReadLine(), out result) || result <= 0)
-            {
-                Console.WriteLine("Ошибка ввода, введите число больше нуля: ");
-                Console.Write(text);
             }
         }
-        return result;
+        Console.WriteLine("Хорошего дня");
     }
-    static double CalculateFuelConsumption(double distance, double fuelConsumption, double fuelCost, double vehicleType)
-        {
-            double fuelConsumed = fuelConsumption * (distance / 100) * (1 + vehicleType);
-            double cost = fuelConsumed * fuelCost;
-            return cost;
-        }
-
-    static double ApplySeasonalCoefficient(double cost, double season)
-    {
-        return cost * (1 + season);
-    }
-    
 }

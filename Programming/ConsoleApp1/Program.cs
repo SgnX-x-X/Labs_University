@@ -18,7 +18,7 @@ using System.Security.Cryptography.X509Certificates;
                 int choice;
                 while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > 5)
                 {
-                    Console.Write("Ошибка ввода, введите ваш выбор(1-4): ");
+                    Console.Write("Ошибка ввода, введите ваш выбор(1-5): ");
                 }
                 switch (choice)
                 {

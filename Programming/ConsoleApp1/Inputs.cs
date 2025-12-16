@@ -14,7 +14,7 @@ static class Inputs
         Console.Write(text);
         while (!int.TryParse(Console.ReadLine(), out result) || result <= 0)
         {
-            Console.WriteLine("Ошибка ввода, введите целое число больше 0:");
+            Console.Write("Ошибка ввода, введите целое число больше 0:");
         }
         return result;
     }
@@ -27,12 +27,12 @@ static class Inputs
     {
         int result;
         Console.Write(text);
-        string input = Console.ReadLine();
+        string? input = Console.ReadLine();
         if(input!="")
         {
             while (!int.TryParse(input, out result) || result <= 0)
             {
-                Console.WriteLine("Ошибка ввода, введите целое число больше 0:");
+                Console.Write("Ошибка ввода, введите целое число больше 0:");
             }
             return result; 
                

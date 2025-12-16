@@ -22,7 +22,7 @@ static class MathGame
     {
         for (int i = 3; i > 0; i--)
         {
-            double att = Inputs.InputDouble("Введите число");
+            double att = Inputs.InputDouble("Введите число: ");
             if (result == att)
             {
                 Console.WriteLine("Поздравляю вы угадали");
@@ -31,7 +31,7 @@ static class MathGame
             else if (i != 1)
             {
                 Console.Clear();
-                Console.Write("Вы не угадали попробуйте снова \nКоличество оставшихся попыток: {0} \nВведите число:", i - 1);
+                Console.WriteLine("Вы не угадали попробуйте снова \nКоличество оставшихся попыток: {0} ", i - 1);
             }
             else
             {

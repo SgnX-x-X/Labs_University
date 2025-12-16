@@ -5,11 +5,13 @@ using System.Diagnostics;
 class ArraySorter
 {
     private readonly int[] array;
+    private int size;
     /// <summary>
     /// Конструктор для создание массива с заданным размером
     /// </summary>
     public ArraySorter(int size)
     {
+        this.size = size;
         array = new int[size];
         Random rnd = new Random();
         for (int i = 0; i < size; i++)
@@ -29,8 +31,8 @@ class ArraySorter
     public void Task()
     {
         PrintArray(array, "Оригинальный массив: ", true);
-        int[] arrayBubbble = ArrayCopy(array);
-        int[] arrayInsertion = ArrayCopy(array);
+        int[] arrayBubbble = ArrayCopy();
+        int[] arrayInsertion = ArrayCopy();
         double timeBubbleSort = BubbleSort(arrayBubbble);
         Console.WriteLine($"Время сортировки пузырком: {timeBubbleSort}");
         PrintArray(arrayBubbble, "Результат сортировки пузырьком: ");
@@ -41,23 +43,30 @@ class ArraySorter
         Console.ReadKey();
         Console.Clear();
     }
-    static int[] ArrayCopy(int[] arr)
+    /// <summary>
+    /// Функция копирования массива
+    /// </summary>
+    public int[] ArrayCopy()
     {
-        int[] copy = new int[arr.Length];
-        for (int i = 0; i < arr.Length; i++)
+        int[] copy = new int[size];
+        for (int i = 0; i < size; i++)
         {
-            copy[i] = arr[i];
+            copy[i] = array[i];
         }
         return copy;
     }
-    static double BubbleSort(int[] arr)
+    /// <summary>
+    /// Функция сортировки пузырьком
+    /// </summary>
+    /// <param name="arr">копия массива для сортировки пузырьком</param>
+    /// <returns>время сортировки</returns>
+    public double BubbleSort(int[] arr)
     {
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-        int n = arr.Length;
-        for (int i = 0; i < n - 1; i++)
+        for (int i = 0; i < size - 1; i++)
         {
-            for (int j = 0; j < n - i - 1; j++)
+            for (int j = 0; j < size - i - 1; j++)
             {
                 if (arr[j] > arr[j + 1])
                 {
@@ -70,11 +79,16 @@ class ArraySorter
         stopwatch.Stop();
         return ((double)stopwatch.ElapsedTicks) / ((double)Stopwatch.Frequency);
     }
-    static double InsertionSort(int[] arr)
+    /// <summary>
+    /// Функция сортировки вставкой
+    /// </summary>
+    /// <param name="arr">копия массива для сортировки вставками</param>
+    /// <returns>время сортировки</returns>
+    public double InsertionSort(int[] arr)
     {
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-        for (int i = 1; i < arr.Length; i++)
+        for (int i = 1; i < size; i++)
         {
             int k = arr[i];
             int j = i - 1;
@@ -87,10 +101,16 @@ class ArraySorter
         }
         stopwatch.Stop();
         return ((double)stopwatch.ElapsedTicks) / ((double)Stopwatch.Frequency);
-    }
-    static void PrintArray(int[] arr, string text, bool message = false)
+    } 
+    /// <summary>
+    /// Функция вывода массива в консоль
+    /// </summary>
+    /// <param name="arr">массив для сортровки</param>
+    /// <param name="text">текст выводимый перед массивом</param>
+    /// <param name="message">выводить ли сообщение о размере массива</param>
+    public void PrintArray(int[] arr, string text, bool message = false)
     {
-        if (arr.Length <= 10)
+        if (size <= 10)
         {
             Console.WriteLine(text + "{" + string.Join(", ", arr) + "}");
         }
