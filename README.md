@@ -18,14 +18,3 @@
 | **[Labs 1 semestr](./Labs%201%20semestr)** | C, C# (.NET) | Основы алгоритмов, работа со строками и файлами, консольные приложения |
 | **[Labs 2 semestr](./Labs%202%20semestr)** | C# (Windows Forms) | Структуры данных (связные списки, двоичные деревья), оконные приложения |
 | **[Labs 3 semestr](./Labs%203%20semestr)** | Java, Python, HTML/CSS | ООП на Java (классы, интерфейсы, исключения), графика и основы веб |
-
----
-
-## 🚀 Быстрый старт (Java ООП, Лабораторная 2)
-
-```bash
-cd "Labs 3 semestr/OOP/2 labs"
-javac transport/*.java Main.java
-jar cvfm Lab2.jar manifest.mf Main.class transport/*.class
-java -jar Lab2.jar
-```
