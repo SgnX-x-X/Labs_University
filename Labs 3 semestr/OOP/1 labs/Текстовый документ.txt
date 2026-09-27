@@ -1,0 +1,25 @@
+# Задание 2 (в папке 1-2)
+cd "c:\Users\sahsa\OneDrive\Desktop\Labs 3 semestr\OOP\1 labs\1-2"
+javac -encoding UTF-8 MyFirstProgram.java
+java MyFirstClass
+
+# Задание 3 (в папке 1-3)
+cd "..\1-3"
+javac -encoding UTF-8 MyFirstProgram.java
+java MyFirstClass Г и л ь ф а н о в
+
+# Задание 4 (в папке 1-4)
+cd "..\1-4"
+javac -encoding UTF-8 MyFirstProgram.java
+java MyFirstClass
+
+# Задание 5 (в папке 1-5)
+cd "..\1-5"
+javac -encoding UTF-8 MyFirstPackage/MySecondClass.java
+javac -encoding UTF-8 MyFirstProgram.java
+java MyFirstClass
+
+# Задание 6 (в папке 1-6)
+cd "..\1-6"
+jar -cvfm myfirst.jar manifest.mf MyFirstClass.class MyFirstPackage/MySecondClass.class
+java -jar myfirst.jar

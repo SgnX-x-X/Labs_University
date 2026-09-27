@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Учебник и путеводитель по HTML: от <body> до <sub></title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.65; color: #2D3748; background: #F7FAFC; margin: 0; padding: 25px; }
+    .container { max-width: 960px; margin: 0 auto; background: #FFFFFF; padding: 45px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #E2E8F0; }
+    h1 { color: #1A365D; border-bottom: 3px solid #3182CE; padding-bottom: 12px; margin-top: 0; }
+    h2 { color: #2B6CB0; margin-top: 35px; border-bottom: 2px solid #EDF2F7; padding-bottom: 8px; }
+    h3 { color: #2C5282; margin-top: 25px; }
+    h4 { color: #9B2C2C; margin-top: 18px; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    th, td { border: 1px solid #CBD5E0; padding: 10px 14px; text-align: left; }
+    th { background: #EDF2F7; color: #1A202C; font-weight: 600; }
+    tr:nth-child(even) { background: #F8FAFC; }
+    code { background: #EDF2F7; color: #C53030; padding: 3px 6px; border-radius: 4px; font-family: Consolas, monospace; font-size: 13.5px; }
+    pre { background: #1A202C; color: #F7FAFC; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: Consolas, monospace; font-size: 13.5px; line-height: 1.4; }
+    blockquote { background: #EBF8FF; border-left: 5px solid #3182CE; margin: 18px 0; padding: 14px 20px; border-radius: 0 8px 8px 0; font-style: normal; }
+    .alert { background: #FEFCBF; border-left: 5px solid #D69E2E; padding: 12px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    ul, ol { padding-left: 28px; }
+    li { margin-bottom: 8px; }
+    .tag-box { background: #F0FFF4; border: 1px solid #9AE6B4; padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Полный понятный путеводитель по HTML: от &lt;body&gt; до &lt;sub&gt;</h1>
+  <p><b>Студент:</b> Гильфанов Александр Александрович (группа 6201-090301D, 2-й курс ИВТ)<br>
+  <b>Цель руководства:</b> Объяснить абсолютно всё устройство сайта простым языком с нуля, чтобы свободно ответить на любой вопрос преподавателя.</p>
+
+  <h2>Введение: Что такое HTML простыми словами?</h2>
+  <p>Представь обычный текст. Если открыть его в браузере, браузер не знает, где заголовок, где кнопка, а где ссылка. <b>HTML (HyperText Markup Language)</b> — это язык разметки. Мы просто «наклеиваем ярлычки» (теги) на слова, чтобы браузер понял, как их показать.</p>
+
+  <div class="tag-box">
+    <b>Главное правило коробки:</b><br>
+    Почти каждый тег открывается <code>&lt;тег&gt;</code> и обязательно закрывается со слэшем <code>&lt;/тег&gt;</code>.<br>
+    <i>Пример:</i> <code>&lt;b&gt;Слово&lt;/b&gt;</code> — открыли тег жирного шрифта, написали слово, закрыли.
+  </div>
+
+  <h2>1. Скелет страницы (Каркас)</h2>
+  <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=Content-Type content=text/html; charset=windows-1251&gt;
+  &lt;title&gt;Персональный сайт студента ИВТ - О себе&lt;/title&gt;
+&lt;/head&gt;
+&lt;body bgcolor=#F4F7FB text=#1A202C link=#0056B3 vlink=#4A148C alink=#E53E3E&gt;
+  ...
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  <ul>
+    <li><code>&lt;!DOCTYPE html&gt;</code> — кричит браузеру: «Рендери меня по современному стандарту HTML5, а не по правилам 90-х годов!».</li>
+    <li><code>&lt;html&gt;</code> — самый главный контейнер всей страницы (корень документа).</li>
+    <li><code>&lt;head&gt;</code> — невидимый «паспорт» страницы:
+      <ul>
+        <li><code>&lt;title&gt;</code> — надпись на вкладке браузера вверху экрана.</li>
+        <li><code>&lt;meta ... charset=windows-1251&gt;</code> — <b>кодировка</b>. Компьютер понимает буквы через номера байтов. Кодировка <code>windows-1251</code> сопоставляет русские буквы байтам по стандарту Windows. Без неё русские буквы станут нечитаемыми «кракозябрами».</li>
+      </ul>
+    </li>
+    <li><code>&lt;body&gt;</code> — всё, что видит пользователь на экране. Атрибуты:
+      <ul>
+        <li><code>bgcolor=#F4F7FB</code> — цвет фона страницы (мягкий серо-голубой оттенок). В хобби вместо него задан узор <code>background=images/bg_pattern.svg</code>.</li>
+        <li><code>text=#1A202C</code> — цвет основного текста.</li>
+        <li><code>link=#0056B3</code> — цвет новых ссылок (синий).</li>
+        <li><code>vlink=#4A148C</code> — цвет посещенных ссылок (фиолетовый).</li>
+        <li><code>alink=#E53E3E</code> — цвет ссылки в момент нажатия (красный).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>2. Как устроен дизайн (Белая карточка с рамкой)</h2>
+  <p>Весь контент всех 6 страниц обёрнут в таблицу-контейнер:</p>
+  <pre>
+&lt;center&gt;
+  &lt;table border=1 cellpadding=20 cellspacing=0 bgcolor=#FFFFFF bordercolor=#CBD5E0 width=88%&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        ... весь текст и разделы ...
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/center&gt;</pre>
+  <ul>
+    <li><code>&lt;center&gt;</code> — ставит карточку ровно по центру экрана.</li>
+    <li><code>width=88%</code> — карточка занимает 88% экрана, оставляя по 6% красивых фоновых полей по бокам.</li>
+    <li><code>bgcolor=#FFFFFF</code> — делает подложку ослепительно белой для четкого чтения.</li>
+    <li><code>border=1 bordercolor=#CBD5E0</code> — тонкая рамка мягкого светло-серого цвета.</li>
+    <li><code>cellpadding=20</code> — <b>внутренний отступ</b> в 20 пикселей между рамкой и текстом (чтобы текст не прилипал к краям).</li>
+    <li><code>cellspacing=0</code> — расстояние между ячейками равно нулю.</li>
+  </ul>
+
+  <h2>3. Навигация и внутренние ссылки</h2>
+  <ul>
+    <li><b>Сквозное меню:</b> табличка <code>&lt;table border=0&gt;</code> вверху страницы. Текущая страница оформлена жирным без ссылки (<code>&lt;b&gt;[ О себе ]&lt;/b&gt;</code>), остальные — ссылки на файлы: <code>&lt;a href=family.html&gt;Моя семья&lt;/a&gt;</code>.</li>
+    <li><b>Ссылка «К началу страницы ↑» (якорь):</b>
+      <ul>
+        <li>В самом верху страницы после <code>&lt;body&gt;</code> стоит скрытая метка-маяк: <code>&lt;a name=top&gt;&lt;/a&gt;</code>.</li>
+        <li>Внизу страницы ссылка со знаком решетки: <code>&lt;a href=#top&gt;К началу страницы ↑&lt;/a&gt;</code>. Знак <code>#</code> говорит браузеру: «Ищи метку с именем <i>top</i> прямо на этой странице и прокрути экран вверх!».</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>4. Все теги текста и оформления</h2>
+  <table>
+    <tr><th>Тег</th><th>Что делает</th><th>Пример из нашего сайта</th></tr>
+    <tr><td><code>&lt;h1&gt;</code>–<code>&lt;h5&gt;</code></td><td>Заголовки 5 уровней</td><td>h1: Название сайта, h2: Раздел, h3: Подраздел, h4: Направления в хобби, h5: Планы в достижениях.</td></tr>
+    <tr><td><code>&lt;p&gt;</code></td><td>Абзац текста</td><td>Формирует смысловой блок с полями сверху и снизу. <code>align=justify</code> выравнивает края по ширине.</td></tr>
+    <tr><td><code>&lt;br&gt;</code></td><td>Перенос строки</td><td>Переносит текст без создания пустого пространства (в адресах, контактах).</td></tr>
+    <tr><td><code>&lt;hr&gt;</code></td><td>Горизонтальная черта</td><td>Разделитель секций. <code>size=3</code> (толщина), <code>width=95%</code> (длина), <code>color=#...</code> (цвет).</td></tr>
+    <tr><td><code>&lt;b&gt;</code></td><td>Полужирный текст</td><td>Выделение ключевых слов, терминов и имен.</td></tr>
+    <tr><td><code>&lt;i&gt;</code></td><td>Курсив (наклонный)</td><td>Цитаты, пояснения, названия технологий.</td></tr>
+    <tr><td><code>&lt;u&gt;</code></td><td>Подчеркивание</td><td>Нижняя черта под текстом для смыслового акцента.</td></tr>
+    <tr><td><code>&lt;sup&gt;</code></td><td>Надстрочный индекс</td><td>Поднимает текст вверх и уменьшает его: <code>1&lt;sup&gt;-й&lt;/sup&gt; кю</code>. Также степени: x<sup>2</sup>.</td></tr>
+    <tr><td><code>&lt;sub&gt;</code></td><td>Подстрочный индекс</td><td>Опускает текст вниз: <code>Примечание&lt;sub&gt;1&lt;/sub&gt;</code>. Также формулы: H<sub>2</sub>O.</td></tr>
+    <tr><td><code>&lt;pre&gt;</code></td><td>Предварительно отформатированный</td><td><b>Не схлопывает пробелы и переносы!</b> Выводит моноширинным шрифтом ровно как напечатано (выписка из диплома хакатона).</td></tr>
+    <tr><td><code>&lt;font&gt;</code></td><td>Свойства шрифта</td><td><code>face</code> (Arial/Verdana/Times), <code>size</code> (от 1 до 6), <code>color</code> (HEX-палитры #...).</td></tr>
+    <tr><td><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code></td><td>Списки</td><td><code>&lt;ol type=1&gt;</code> нумерует пункты (1, 2, 3), <code>&lt;ul type=disc/square&gt;</code> ставит маркеры. <code>&lt;li&gt;</code> — сам элемент списка.</td></tr>
+    <tr><td><code>&lt;img&gt;</code></td><td>Картинка</td><td><code>src="images/Ava.jpg"</code> (относительный путь), <code>width=170 height=170</code> (масштабирование), <code>alt="..."</code> (описание).</td></tr>
+  </table>
+
+  <h2>5. Мнемоники («запрещенные» спецсимволы)</h2>
+  <p>Символы <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>"</code> зарезервированы языком HTML. Если напечатать <code>&lt;</code> прямо в тексте, браузер решит, что открылся новый тег, и сломает страницу. Поэтому пишут мнемоники:</p>
+  <ul>
+    <li><code>&amp;lt;</code> — знак меньше (&lt;);</li>
+    <li><code>&amp;gt;</code> — знак больше (&gt;);</li>
+    <li><code>&amp;quot;</code> — двойная кавычка (&quot;);</li>
+    <li><code>&amp;laquo;</code> и <code>&amp;raquo;</code> — кавычки-ёлочки (&laquo; и &raquo;);</li>
+    <li><code>&amp;mdash;</code> — длинное тире (&mdash;);</li>
+    <li><code>&amp;bull;</code> — круглый маркер списка (&bull;);</li>
+    <li><code>&amp;uarr;</code> — стрелка вверх в ссылке наверх (&uarr;).</li>
+  </ul>
+
+  <h2>6. Готовые ответы на вопросы преподавателя</h2>
+  <blockquote>
+    <b>Преподаватель:</b> «Как устроен твой проект и как ты покажешь владение HTML?»<br>
+    <b>Ты:</b> «Сайт состоит из 6 страниц в кодировке Windows-1251. Для аккуратного чтения на мониторах страницы оформлены в виде белых карточек со светло-серой рамкой <code>border=1</code> и отступом <code>cellpadding=20</code>. Использованы заголовки пяти уровней (от h1 до h5), списки всех типов, форматирование шрифтов, масштабированные изображения с локальными путями, таблица успеваемости, надстрочный индекс <code>&lt;sup&gt;</code> в поясе дзюдо, подстрочный <code>&lt;sub&gt;</code> в сноске и блок <code>&lt;pre&gt;</code> с выпиской из моего диплома хакатона от Альфа-Банка, который сохраняет отступы и моноширинный шрифт».
+  </blockquote>
+
+</div>
+</body>
+</html>
