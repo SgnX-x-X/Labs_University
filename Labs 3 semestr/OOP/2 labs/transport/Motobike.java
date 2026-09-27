@@ -1,3 +1,5 @@
+package transport;
+
 import java.util.Random;
 
 public class Motobike implements Transport {

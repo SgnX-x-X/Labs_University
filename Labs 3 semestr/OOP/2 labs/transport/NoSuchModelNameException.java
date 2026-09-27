@@ -1,3 +1,5 @@
+package transport;
+
 public class NoSuchModelNameException extends Exception {
     private final String modelName;
 

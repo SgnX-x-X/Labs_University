@@ -1,3 +1,5 @@
+package transport;
+
 public class ModelPriceOutOfBoundsException extends RuntimeException {
     private final double price;
 

@@ -1,3 +1,5 @@
+package transport;
+
 public class TransportStatic {
 
     public static void show(Transport transport) {

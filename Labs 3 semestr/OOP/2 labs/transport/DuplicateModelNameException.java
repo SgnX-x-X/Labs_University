@@ -1,3 +1,5 @@
+package transport;
+
 public class DuplicateModelNameException extends Exception {
     private final String modelName;
 
