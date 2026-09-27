@@ -2,7 +2,7 @@ public class ModelPriceOutOfBoundsException extends RuntimeException {
     private final double price;
 
     public ModelPriceOutOfBoundsException(double price) {
-        super("Цена" + price + " выходит за пределы");
+        super("Цена - " + price + " выходит за пределы");
         this.price = price;
     }
 
