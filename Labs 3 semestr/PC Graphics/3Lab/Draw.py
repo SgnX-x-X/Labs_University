@@ -83,7 +83,7 @@ def bezier_cubic(img, p0, p1, p2, p3, color, steps=60):
 
 def flood_fill_solid(img, start_x, start_y, fill_color):
     """
-    Модифицированный алгоритм с «затравкой»
+    Простой (немодифицированный) 4-связный алгоритм с «затравкой».
     """
     w, h = img.width, img.height
     x, y = int(start_x), int(start_y)
@@ -96,32 +96,14 @@ def flood_fill_solid(img, start_x, start_y, fill_color):
         return
 
     stack = [(x, y)]
+    pix[x, y] = fill_color
+
     while stack:
         cx, cy = stack.pop()
-        if pix[cx, cy] != target:
-            continue
-
-        x_left = cx
-        while x_left >= 0 and pix[x_left, cy] == target:
-            x_left -= 1
-        x_left += 1
-
-        x_right = cx
-        while x_right < w and pix[x_right, cy] == target:
-            x_right += 1
-        x_right -= 1
-
-        for i in range(x_left, x_right + 1):
-            pix[i, cy] = fill_color
-        for ny in (cy + 1, cy - 1):
-            if 0 <= ny < h:
-                nx = x_left
-                while nx <= x_right:
-                    if pix[nx, ny] == target:
-                        while nx <= x_right and pix[nx, ny] == target:
-                            nx += 1
-                        stack.append((nx - 1, ny))
-                    nx += 1
+        for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+            if 0 <= nx < w and 0 <= ny < h and pix[nx, ny] == target:
+                pix[nx, ny] = fill_color
+                stack.append((nx, ny))
 
 
 def create_watermelon_pattern(width=60, height=60, dark_color=(16, 68, 28), light_color=(76, 175, 58)):
