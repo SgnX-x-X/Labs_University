@@ -2,17 +2,6 @@ import math
 import tkinter as tk
 from PIL import Image, ImageTk
 
-# Настройка High-DPI для четкого отображения на Windows
-try:
-    import ctypes
-    ctypes.windll.shcore.SetProcessDpiAwareness(1)
-except Exception:
-    try:
-        import ctypes
-        ctypes.windll.user32.SetProcessDPIAware()
-    except Exception:
-        pass
-
 def set_pixel(img, x, y, color):
     """Установка цвета пикселя с проверкой границ холста."""
     if 0 <= x < img.width and 0 <= y < img.height:
@@ -21,7 +10,7 @@ def set_pixel(img, x, y, color):
 
 def bresenham_line(img, x0, y0, x1, y1, color, watertight=True):
     """
-    Целочисленный алгоритм Брезенхема для отрезка прямой.
+    Алгоритм Брезенхема для отрезка прямой.
     """
     x0, y0, x1, y1 = int(round(x0)), int(round(y0)), int(round(x1)), int(round(y1))
     dx = abs(x1 - x0)
@@ -77,59 +66,6 @@ def bresenham_circle(img, xc, yc, r, color, watertight=True):
             d += 4 * (x - y) + 10
             y -= 1
         x += 1
-
-
-def bresenham_ellipse(img, xc, yc, rx, ry, color, watertight=True):
-    """
-    Алгоритм средней точки Брезенхема для эллипса
-    """
-    xc, yc, rx, ry = int(round(xc)), int(round(yc)), int(round(rx)), int(round(ry))
-    if rx <= 0 or ry <= 0:
-        return
-
-    rx2 = rx * rx
-    ry2 = ry * ry
-
-    def plot_4(cx, cy, px, py):
-        for ppx, ppy in [(cx + px, cy + py), (cx - px, cy + py), (cx + px, cy - py), (cx - px, cy - py)]:
-            set_pixel(img, ppx, ppy, color)
-            if watertight:
-                if ppx > cx:
-                    set_pixel(img, ppx - 1, ppy, color)
-                elif ppx < cx:
-                    set_pixel(img, ppx + 1, ppy, color)
-
-    # Область 1 (|dy/dx| < 1)
-    x = 0
-    y = ry
-    d1 = 4 * ry2 - 4 * rx2 * ry + rx2
-    dx = 2 * ry2 * x
-    dy = 2 * rx2 * y
-
-    while dx < dy:
-        plot_4(xc, yc, x, y)
-        x += 1
-        dx += 2 * ry2
-        if d1 < 0:
-            d1 += 4 * dx + 4 * ry2
-        else:
-            y -= 1
-            dy -= 2 * rx2
-            d1 += 4 * (dx - dy) + 4 * ry2
-
-    # Область 2 (|dy/dx| >= 1)
-    d2 = 4 * ry2 * (x + 1) * (x + 1) + 4 * rx2 * (y - 1) * (y - 1) - 4 * rx2 * ry2
-    while y >= 0:
-        plot_4(xc, yc, x, y)
-        y -= 1
-        dy -= 2 * rx2
-        if d2 > 0:
-            d2 += 4 * rx2 - 4 * dy
-        else:
-            x += 1
-            dx += 2 * ry2
-            d2 += 4 * (dx - dy) + 4 * rx2
-
 
 def bezier_cubic(img, p0, p1, p2, p3, color, steps=60):
     """
@@ -190,13 +126,11 @@ def flood_fill_solid(img, start_x, start_y, fill_color):
 
 def create_watermelon_pattern(width=60, height=60, dark_color=(16, 68, 28), light_color=(76, 175, 58)):
     """
-    Создание массива-узора pattern[Width][Height] (Лекция 4, разд. 2.2.3, стр. 4).
-    Пиксельная карта элемента мозаики с волнистыми полосами арбуза.
+   Мозаики с волнистыми полосами арбуза.
     """
     pattern = [[None for _ in range(height)] for _ in range(width)]
     for x in range(width):
         for y in range(height):
-            # Волнообразный изгиб полос для текстуры арбуза
             wave = int(7.0 * math.sin(2.0 * math.pi * y / height))
             if ((x + wave) % width) < (width // 2):
                 pattern[x][y] = dark_color
@@ -265,9 +199,19 @@ def draw_watermelon(img):
     DARK_GREEN = (16, 68, 28)
     LIGHT_GREEN = (76, 175, 58)
     BROWN = (95, 65, 35)
+    RED = (220, 38, 38)
     bresenham_circle(img, XC, YC, R, DARK_GREEN, watertight=True)
+
+    # Диагональная прямая через центр окружности (алгоритм Брезенхема)
+    diag_delta = int(round(R / math.sqrt(2)))
+    bresenham_line(img, XC - diag_delta, YC - diag_delta, XC + diag_delta, YC + diag_delta, DARK_GREEN, watertight=True)
+
+    # Первая половина — с узором
     wm_pattern = create_watermelon_pattern(width=50, height=50, dark_color=DARK_GREEN, light_color=LIGHT_GREEN)
-    flood_fill_pattern(img, XC, YC, wm_pattern)
+    flood_fill_pattern(img, XC + 50, YC - 50, wm_pattern)
+
+    # Вторая половина — сплошная красная
+    flood_fill_solid(img, XC - 50, YC + 50, RED)
     bezier_cubic(img, (XC - 4, stem_y), (XC - 9, stem_y - 18), (XC - 5, stem_y - 34), (XC + 9, stem_y - 46), BROWN)
     bezier_cubic(img, (XC + 4, stem_y), (XC - 1, stem_y - 18), (XC + 3, stem_y - 34), (XC + 17, stem_y - 44), BROWN)
     bresenham_line(img, XC + 9, stem_y - 46, XC + 17, stem_y - 44, BROWN, watertight=True)
