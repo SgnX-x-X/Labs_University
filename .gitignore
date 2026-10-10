@@ -59,3 +59,11 @@ Desktop.ini
 $RECYCLE.BIN/
 *.tmp
 *.log
+
+# Временные файлы ввода/вывода (Лаб 3 ООП)
+*.transport
+*.serialized
+*.ser
+*.dat
+car.txt
+bike.txt
