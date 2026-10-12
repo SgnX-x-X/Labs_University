@@ -5,8 +5,8 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) {
         Transport[] transports = new Transport[8];
-        transports[0] = new Car("Четырёхколёсное", 6);
-        transports[1] = new Motobike("Двухколёсное", 5);
+        transports[0] = new Car("Новый автомобиль", 6);
+        transports[1] = new Motobike("Новый мотоцикл", 5);
 
         System.out.println("--- 1. Запись и чтение через байтовые потоки ---");
         try (OutputStream out = new FileOutputStream("car.transport")) {
